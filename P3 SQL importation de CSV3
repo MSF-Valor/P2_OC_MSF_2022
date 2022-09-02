@@ -1,0 +1,4 @@
+COPY immobilier.mutation(valeur_fonciere, date_mutation, nature_mutation, id_bien)
+FROM 'C:\Users\ThyEx\OneDrive\Desktop\Mutation.csv'
+DELIMITER ';'
+CSV HEADER;
