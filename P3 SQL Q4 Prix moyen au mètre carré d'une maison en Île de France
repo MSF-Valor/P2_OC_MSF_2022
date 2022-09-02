@@ -1,0 +1,9 @@
+-- Requete 4. Prix moyen du mètre carré d’une maison en Île-de-France.
+SELECT ROUND(AVG(mutation.valeur_fonciere)/AVG(bien.surface_carrez),2) AS Prix_moyen_metre_carrez_maison_Ile_de_France
+-- Prix du metre carrez = (moyenne de valeur fonciere / moyenne de surface carrez) arrondi a 2 chiffres apres la virgule
+FROM immobilier.bien NATURAL JOIN immobilier.mutation
+NATURAL JOIN immobilier.commune
+WHERE bien.type_local='Maison'
+-- Filtre par Maison
+AND commune.code_departement IN ('75','77','78','91','92','93','94','95')
+-- Filtre par departement correspondant à l'Ile de France
