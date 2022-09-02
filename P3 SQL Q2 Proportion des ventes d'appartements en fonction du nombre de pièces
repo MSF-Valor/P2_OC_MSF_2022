@@ -1,0 +1,16 @@
+-- Requete 2. Proportion des ventes d’appartements par le nombre de pièces.
+SELECT bien.nombre_pieces_principales AS nombre_pieces_principales, 
+ROUND(ROUND(COUNT(mutation.id_mutation)*100000/
+(SELECT COUNT(mutation.id_mutation) 
+			  FROM immobilier.bien JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+			  WHERE mutation.nature_mutation='Vente' AND bien.type_local = 'Appartement'),3)/1000,3) AS Proportion_des_ventes_d_appartements_pourcents
+-- La multiplication par 100000 sert a eviter de perdre de la precision
+-- La division par 1000 sert a ramener les valeurs en pourcentages
+-- Le second ROUND sert a clarifier les resultats en ne gardant que 3 chiffres apres la virgule
+FROM immobilier.bien NATURAL JOIN immobilier.mutation
+WHERE mutation.nature_mutation='Vente' AND bien.type_local = 'Appartement'
+--Filtre par Vente et Appartement
+GROUP BY nombre_pieces_principales
+--Regroupe les resultats par nombres de pieces
+ORDER BY nombre_pieces_principales
+-- Organise les resultats par nombres de pieces
