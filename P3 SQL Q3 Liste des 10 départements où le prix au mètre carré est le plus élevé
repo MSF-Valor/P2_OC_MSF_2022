@@ -1,0 +1,10 @@
+-- Requete 3. Liste des 10 départements où le prix du mètre carré est le plus élevé
+SELECT commune.code_departement, ROUND(AVG(valeur_fonciere)/AVG(surface_carrez),2) AS prix_moyen_du_metre_carrez
+-- Affiche le code de departement et le prix du metre carrez
+-- Prix du metre carrez = (moyenne de valeur fonciere / moyenne de surface carrez) arrondi a 2 chiffres apres la virgule
+FROM immobilier.mutation JOIN immobilier.bien ON mutation.id_bien=bien.id_bien
+JOIN immobilier.commune ON bien.code_id_commune=commune.code_id_commune
+GROUP BY commune.code_departement
+ORDER BY prix_moyen_du_metre_carrez DESC
+LIMIT 10
+-- Limite a dix le nombre de resultats
