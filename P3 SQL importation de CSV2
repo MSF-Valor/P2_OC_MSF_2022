@@ -1,0 +1,4 @@
+COPY immobilier.bien(surface_carrez, nombre_pieces_principales, type_local, code_id_commune)
+FROM 'C:\Users\ThyEx\OneDrive\Desktop\Bien.csv'
+DELIMITER ';'
+CSV HEADER;
