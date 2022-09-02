@@ -1,0 +1,4 @@
+COPY immobilier.commune(code_id_commune, code_departement, commune)
+FROM 'C:\Users\ThyEx\OneDrive\Desktop\Commune.csv'
+DELIMITER ';'
+CSV HEADER;
