@@ -1,0 +1,50 @@
+
+CREATE TABLE immobilier.Commune (
+                code_id_commune INTEGER NOT NULL,
+                code_departement VARCHAR NOT NULL,
+                commune VARCHAR NOT NULL,
+                CONSTRAINT code_commune PRIMARY KEY (code_id_commune)
+);
+
+
+CREATE SEQUENCE immobilier.bien_id_bien_seq;
+
+CREATE TABLE immobilier.Bien (
+                id_bien INTEGER NOT NULL DEFAULT nextval('immobilier.bien_id_bien_seq'),
+                code_id_commune INTEGER NOT NULL,
+                surface_carrez NUMERIC(6,2) NOT NULL,
+                nombre_pieces_principales INTEGER NOT NULL,
+                type_local VARCHAR NOT NULL,
+                CONSTRAINT id_bien PRIMARY KEY (id_bien)
+);
+
+
+ALTER SEQUENCE immobilier.bien_id_bien_seq OWNED BY immobilier.Bien.id_bien;
+
+CREATE SEQUENCE immobilier.mutation_id_mutation_seq;
+
+CREATE TABLE immobilier.Mutation (
+                id_mutation INTEGER NOT NULL DEFAULT nextval('immobilier.mutation_id_mutation_seq'),
+                id_bien INTEGER NOT NULL,
+                valeur_fonciere NUMERIC(9,2),
+                date_mutation DATE NOT NULL,
+                nature_mutation VARCHAR NOT NULL,
+                CONSTRAINT id_mutation PRIMARY KEY (id_mutation)
+);
+
+
+ALTER SEQUENCE immobilier.mutation_id_mutation_seq OWNED BY immobilier.Mutation.id_mutation;
+
+ALTER TABLE immobilier.Bien ADD CONSTRAINT commune_bien_fk
+FOREIGN KEY (code_id_commune)
+REFERENCES immobilier.Commune (code_id_commune)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE immobilier.Mutation ADD CONSTRAINT bien_mutation_fk
+FOREIGN KEY (id_bien)
+REFERENCES immobilier.Bien (id_bien)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
