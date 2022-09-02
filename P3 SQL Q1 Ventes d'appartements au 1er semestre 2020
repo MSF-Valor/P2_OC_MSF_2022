@@ -1,0 +1,8 @@
+-- Requete 1. Nombre total d’appartements vendus au 1er semestre 2020.
+SELECT COUNT(CASE WHEN mutation.date_mutation BETWEEN '2020-01-01' AND '2020-06-30' THEN 1 END) AS Appartements_vendus_au_1er_semestre_2020
+-- Compte 1 pour chaque occurence de date de mutation comprise entre le 2020-01-01 et le 2020-06-30
+FROM immobilier.mutation
+INNER JOIN immobilier.bien ON mutation.id_bien = bien.id_bien
+-- Lie les tables bien et mutation
+WHERE nature_mutation = 'Vente' AND type_local = 'Appartement'
+--Filtre par Vente et par Appartement
