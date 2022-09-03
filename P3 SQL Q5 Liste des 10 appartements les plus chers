@@ -1,0 +1,10 @@
+-- Requete 5. Liste des 10 appartements les plus chers avec le département et le nombre de mètres carrés.
+SELECT COALESCE(mutation.valeur_fonciere,0) AS valeurs_fonciere, bien.surface_carrez, commune.code_departement
+-- Affiche la valeur fonciere, la surface carrez et le code departement
+FROM immobilier.bien JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+JOIN immobilier.commune ON bien.code_id_commune=commune.code_id_commune
+WHERE bien.type_local='Appartement'
+-- Filtre par Appartement
+ORDER BY valeurs_fonciere DESC
+-- Organise par valeur fonciere
+LIMIT 10
