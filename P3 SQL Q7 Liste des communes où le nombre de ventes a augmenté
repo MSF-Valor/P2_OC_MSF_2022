@@ -1,0 +1,16 @@
+-- Requete 7. Liste des communes où le nombre de ventes a augmenté d'au moins 20% entre le premier et le second trimestre de 2020
+SELECT *
+FROM
+(SELECT commune.commune,
+ 		COUNT(CASE WHEN mutation.date_mutation BETWEEN '2020-01-01' AND '2020-03-31' THEN 1 END) AS premier_semestre,
+ 		COUNT(CASE WHEN mutation.date_mutation BETWEEN '2020-04-01' AND '2020-06-30' THEN 1 END)AS deuxieme_semestre,
+        COUNT(CASE WHEN mutation.date_mutation BETWEEN '2020-04-01' AND '2020-06-30' THEN 1 END)*100/
+              NULLIF(COUNT(CASE WHEN mutation.date_mutation BETWEEN '2020-01-01' AND '2020-03-31' THEN 1 END),0)-100 AS taux_evolution_nb_ventes_pourcents
+-- NULLIF evite division par 0
+FROM immobilier.mutation
+NATURAL JOIN immobilier.bien
+NATURAL JOIN immobilier.commune
+GROUP BY commune.commune
+ORDER BY commune.commune) AS Taux
+-- AS necessaire pour la sous requete
+WHERE taux_evolution_nb_ventes_pourcents >= 20
