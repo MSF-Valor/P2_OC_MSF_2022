@@ -1,0 +1,9 @@
+-- Requete 6. Taux d’évolution du nombre de ventes entre le premier et le second trimestre de 2020.
+SELECT ROUND(ROUND(COUNT(id_mutation)*100000/
+-- Multiplication par 100000 puis division par 100 pour ne pas perdre de la précision
+	(SELECT COUNT(id_mutation)
+	FROM immobilier.mutation
+	WHERE mutation.date_mutation BETWEEN '2020-01-01' AND '2020-03-31'),2)/1000-100,2) AS taux_d_evolution_nombres_ventes
+-- On fait ventes du second semestre sur ventes du premier semestre fois 100 
+FROM immobilier.mutation
+WHERE mutation.date_mutation BETWEEN '2020-04-01' AND '2020-06-30'
