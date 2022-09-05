@@ -1,0 +1,41 @@
+-- Les moyennes de valeurs foncières pour le top 3 des communes des départements 6, 13, 33, 59 et 69 
+(SELECT commune.commune, ROUND(AVG(mutation.valeur_fonciere),2) AS moyenne_valeur_fonciere
+FROM immobilier.bien JOIN immobilier.commune ON bien.code_id_commune = commune.code_id_commune
+JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE commune.code_departement = '6'
+GROUP BY commune.commune
+ORDER BY moyenne_valeur_fonciere DESC
+LIMIT 3)
+UNION
+-- UNION pour cumuler les 5 requetes, 1 par departement
+(SELECT commune.commune, ROUND(AVG(mutation.valeur_fonciere),2) AS moyenne_valeur_fonciere
+FROM immobilier.bien JOIN immobilier.commune ON bien.code_id_commune = commune.code_id_commune
+JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE commune.code_departement = '13'
+GROUP BY commune.commune
+ORDER BY moyenne_valeur_fonciere DESC
+LIMIT 3)
+UNION
+(SELECT commune.commune, ROUND(AVG(mutation.valeur_fonciere),2) AS moyenne_valeur_fonciere
+FROM immobilier.bien JOIN immobilier.commune ON bien.code_id_commune = commune.code_id_commune
+JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE commune.code_departement = '33'
+GROUP BY commune.commune
+ORDER BY moyenne_valeur_fonciere DESC
+LIMIT 3)
+UNION
+(SELECT commune.commune, ROUND(AVG(mutation.valeur_fonciere),2) AS moyenne_valeur_fonciere
+FROM immobilier.bien JOIN immobilier.commune ON bien.code_id_commune = commune.code_id_commune
+JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE commune.code_departement = '59'
+GROUP BY commune.commune
+ORDER BY moyenne_valeur_fonciere DESC
+LIMIT 3)
+UNION
+(SELECT commune.commune, ROUND(AVG(mutation.valeur_fonciere),2) AS moyenne_valeur_fonciere
+FROM immobilier.bien JOIN immobilier.commune ON bien.code_id_commune = commune.code_id_commune
+JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE commune.code_departement = '69'
+GROUP BY commune.commune
+ORDER BY moyenne_valeur_fonciere DESC
+LIMIT 3)
