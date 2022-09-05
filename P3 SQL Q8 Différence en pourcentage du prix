@@ -1,0 +1,8 @@
+-- Requete 8. Différence en pourcentage du prix au mètre carré entre un appartement de 2 pièces et un appartement de 3 pièces.
+SELECT ROUND((ROUND(AVG(CASE WHEN bien.nombre_pieces_principales = 3 THEN (mutation.valeur_fonciere) / (bien.surface_carrez) END),2)
+-ROUND(AVG(CASE WHEN bien.nombre_pieces_principales = 2 THEN (mutation.valeur_fonciere) / (bien.surface_carrez) END),2))*100
+/ROUND(AVG(CASE WHEN bien.nombre_pieces_principales = 2 THEN (mutation.valeur_fonciere) / (bien.surface_carrez) END),2),2)
+-- Prix appartement 3 pièces moins prix appartement 2 pièces sur prix appartement 2 pièces fois 100
+AS Difference_pourcentage_prix_metre_carrez_appartement_2_pieces_3_pieces
+FROM immobilier.bien JOIN immobilier.mutation ON mutation.id_bien=bien.id_bien
+WHERE bien.type_local = 'Appartement'
